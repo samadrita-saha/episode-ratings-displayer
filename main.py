@@ -17,6 +17,7 @@ def get_num_seasons(show_id):
     driver.get(url)
     
     multi_season = driver.find_elements(By.XPATH, "//select[@id='browse-episodes-season']")
+    # print(multi_season)
     
     if(len(multi_season) == 0):
         seasons = [1]
@@ -92,6 +93,7 @@ def main(show_id):
     generate_heatmap(df)
 
 
-show_id = "tt7366338" # Chernobyl
-# show_id = "tt7120662" # Derry Girls
-main(show_id)
+if __name__ == "__main__":
+    # show_id = "tt7366338" # Chernobyl
+    show_id = "tt7120662" # Derry Girls
+    main(show_id)
