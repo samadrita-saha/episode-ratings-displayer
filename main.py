@@ -56,8 +56,12 @@ def get_episode_ratings(show_id, num_seasons):
             if match:
                 episode_rating = match.group(1)  
             else:
-                episode_rating = "10"  
+                episode_rating = None
             
+            match_10 = re.search(r'(\d\d+)\s*(?=/10)', episode_blurb)
+            if match_10:
+                episode_rating = "10"
+
             episode_data.append({
                 "Season": season,
                 "Episode": i+1,
