@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import re
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,9 +12,12 @@ import seaborn as sns
 def get_num_seasons(show_id):   
 
     url = f"https://www.imdb.com/title/{show_id}"
+
+    options = Options()
+    options.headless = True 
     
     os.environ["PATH"] += os.pathsep + r'C:\Users\samad\Downloads'
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
     
     multi_season = driver.find_elements(By.XPATH, "//select[@id='browse-episodes-season']")
@@ -38,11 +42,14 @@ def get_episode_ratings(show_id, num_seasons):
     
     episode_data = []
 
+    options = Options()
+    options.headless = True 
+
     for season in range(1, num_seasons + 1):
         url = f"https://www.imdb.com/title/{show_id}/episodes/?season={season}"
 
         os.environ["PATH"] += os.pathsep + r'C:\Users\samad\Downloads'
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=options)
         driver.get(url)
         
         episodes = driver.find_elements(By.XPATH, "//div[contains(@class, 'sc-f2169d65-1 iwjtYd')]")
@@ -72,7 +79,7 @@ def get_episode_ratings(show_id, num_seasons):
     return episode_data
 
 
-def generate_heatmap(df):
+def generate_heatmap(df, show_title):
     
     df['Rating'] = pd.to_numeric(df['Rating'], errors='coerce')
     heatmap_data = df.pivot(index='Episode', columns='Season', values='Rating')
@@ -83,21 +90,26 @@ def generate_heatmap(df):
     plt.gca().xaxis.tick_top()  
     plt.xlabel('Season')
     plt.ylabel('Episode')
-    plt.show()
+    plt.title(show_title)
+    # plt.show()
+
+    image_filename = "heatmap.png"
+    image_path = os.path.join('static', image_filename)
+    plt.savefig(image_path)
+    plt.close()
+
+    return image_filename 
+
            
-
-def main(show_id):
-    
-    num_seasons = get_num_seasons(show_id)
-    episode_data = get_episode_ratings(show_id, num_seasons)
-
-    df = pd.DataFrame(episode_data)
-    print(df)
-    
-    generate_heatmap(df)
+# def main(show_id):
+#     num_seasons = get_num_seasons(show_id)
+#     episode_data = get_episode_ratings(show_id, num_seasons)
+#     df = pd.DataFrame(episode_data)
+#     print(df)
+#     generate_heatmap(df)
 
 
-if __name__ == "__main__":
-    # show_id = "tt7366338" # Chernobyl
-    show_id = "tt7120662" # Derry Girls
-    main(show_id)
+# if __name__ == "__main__":
+#     # show_id = "tt7366338" # Chernobyl
+#     show_id = "tt7120662" # Derry Girls
+#     main(show_id)
