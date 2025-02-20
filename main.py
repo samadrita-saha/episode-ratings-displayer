@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 import re
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -15,9 +17,9 @@ def get_num_seasons(show_id):
 
     options = Options()
     options.headless = True 
+    service = Service(ChromeDriverManager().install())
     
-    os.environ["PATH"] += os.pathsep + r'C:\Users\samad\Downloads'
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(service=service, options=options)
     driver.get(url)
     
     multi_season = driver.find_elements(By.XPATH, "//select[@id='browse-episodes-season']")
@@ -44,12 +46,12 @@ def get_episode_ratings(show_id, num_seasons):
 
     options = Options()
     options.headless = True 
+    service = Service(ChromeDriverManager().install())
 
     for season in range(1, num_seasons + 1):
         url = f"https://www.imdb.com/title/{show_id}/episodes/?season={season}"
 
-        os.environ["PATH"] += os.pathsep + r'C:\Users\samad\Downloads'
-        driver = webdriver.Chrome(options=options)
+        driver = webdriver.Chrome(service=service, options=options)
         driver.get(url)
         
         episodes = driver.find_elements(By.XPATH, "//div[contains(@class, 'sc-f2169d65-1 iwjtYd')]")

@@ -2,7 +2,8 @@ import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-import sys 
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 # from main import main
 
 def get_show_info(show_name):
@@ -11,9 +12,9 @@ def get_show_info(show_name):
 
     options = Options()
     options.headless = True 
+    service = Service(ChromeDriverManager().install())
     
-    os.environ["PATH"] += os.pathsep + r'C:\Users\samad\Downloads'
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(service=service, options=options)
     driver.get(url)
     
     show_name_element = driver.find_element(By.CLASS_NAME, "ipc-metadata-list-summary-item__t")
