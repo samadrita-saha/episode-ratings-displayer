@@ -8,6 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import re
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -91,6 +92,8 @@ def generate_heatmap(df, show_title):
     
     df['Rating'] = pd.to_numeric(df['Rating'], errors='coerce')
     heatmap_data = df.pivot(index='Episode', columns='Season', values='Rating')
+    heatmap_data.dropna(axis=0, how='all', inplace=True)
+    heatmap_data.dropna(axis=1, how='all', inplace=True)
 
     plt.figure(figsize=(8, 6))
     sns.heatmap(heatmap_data, annot=True, cmap="RdYlGn", linewidths=0.5, fmt=".1f", center=5.0, vmin=0, vmax=10)
