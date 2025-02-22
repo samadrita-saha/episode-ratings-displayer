@@ -16,7 +16,10 @@ def get_num_seasons(show_id):
     url = f"https://www.imdb.com/title/{show_id}"
 
     options = Options()
-    options.headless = True 
+    options.add_argument('--headless=new')  
+    options.add_argument('--window-size=1920x1080')  
+    options.add_argument('--disable-blink-features=AutomationControlled')  
+    options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
     service = Service(ChromeDriverManager().install())
     
     driver = webdriver.Chrome(service=service, options=options)
@@ -45,7 +48,10 @@ def get_episode_ratings(show_id, num_seasons):
     episode_data = []
 
     options = Options()
-    options.headless = True 
+    options.add_argument('--headless=new')  
+    options.add_argument('--window-size=1920x1080')  
+    options.add_argument('--disable-blink-features=AutomationControlled')  
+    options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
     service = Service(ChromeDriverManager().install())
 
     for season in range(1, num_seasons + 1):
