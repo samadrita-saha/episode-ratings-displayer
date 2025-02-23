@@ -1,8 +1,19 @@
-version: '3.8'
+name: "tv-score-app"
 
 services:
   flask-app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
-    shm_size: 2g  
+      - 5000:5000
+
+    shm_size: 2g
+
+    develop:
+      watch:
+        - action: sync
+          target: /src
+          path: .
+          ignore:
+            - venv/
