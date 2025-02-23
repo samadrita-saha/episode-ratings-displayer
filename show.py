@@ -20,7 +20,8 @@ def get_show_info(show_name):
     driver = webdriver.Chrome(service=service, options=options)
     driver.get(url)
     
-    show_name_element = driver.find_element(By.CLASS_NAME, "ipc-metadata-list-summary-item__t")
+    # show_name_element = driver.find_element(By.CLASS_NAME, "ipc-metadata-list-summary-item__t")
+    show_name_element = driver.find_element(By.XPATH, "//li[contains(@class, 'find-result-item')]//a")
     show_url = show_name_element.get_attribute("href")
     show_id = show_url.split('/')[4]
     show_title = show_name_element.text
@@ -30,5 +31,6 @@ def get_show_info(show_name):
 
     
 # show_name = input("Enter a show name: ")
-# show_id = get_show_id(show_name)
+# show_id, show_title = get_show_info(show_name)
+# print(show_title, show_id)
 # main(show_id)

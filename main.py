@@ -116,11 +116,13 @@ def generate_heatmap(df, show_title):
 #     num_seasons = get_num_seasons(show_id)
 #     episode_data = get_episode_ratings(show_id, num_seasons)
 #     df = pd.DataFrame(episode_data)
+#     print(show_id)
 #     print(df)
-#     generate_heatmap(df)
+#     # generate_heatmap(df)
 
 
 # if __name__ == "__main__":
 #     # show_id = "tt7366338" # Chernobyl
-#     show_id = "tt7120662" # Derry Girls
+#     # show_id = "tt7120662" # Derry Girls
+#     show_id = "tt0903747" # Breaking Bad
 #     main(show_id)
