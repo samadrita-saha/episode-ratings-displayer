@@ -13,7 +13,7 @@ services:
     develop:
       watch:
         - action: sync
-          target: /src
+          target: /app
           path: .
           ignore:
             - venv/
