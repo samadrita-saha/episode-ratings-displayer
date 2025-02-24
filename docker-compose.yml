@@ -4,11 +4,11 @@ services:
   flask-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.new
     ports:
       - 5000:5000
 
-    shm_size: 2g
+    shm_size: 256m
 
     develop:
       watch:
